@@ -1,29 +1,20 @@
 %% Task 1: Feedforward multi-layer networks (multi-layer perceptrons)
 
-function task1_feedforward_mlp(x, t)
+function task1_feedforward_mlp(x, t, hiddenLayerSize, trainRatio, valRatio, testRatio)
 
-    % Ensure targets are one-hot encoded if they are categorical
-    if iscategorical(t)
-        t = dummyvar(t);  % Converts categorical targets to one-hot encoding
-    end
-    
     % Transpose data
     x = x';
     t = t'; 
-    
     % Choose a Training Function
     trainFcn = 'trainscg';  % Scaled Conjugate Gradient Backpropagation
-    
-    % Define the number of neurons in the hidden layer
-    hiddenLayerSize = 18;  % Example, you can adjust this
     
     % Create a Pattern Recognition Network
     net = patternnet(hiddenLayerSize, trainFcn);
     
     % Setup Data Division for Training, Validation, and Testing
-    net.divideParam.trainRatio = 70/100;  % 70% of data for training
-    net.divideParam.valRatio = 15/100;    % 15% of data for validation
-    net.divideParam.testRatio = 15/100;   % 15% of data for testing
+    net.divideParam.trainRatio = trainRatio;  
+    net.divideParam.valRatio = valRatio;    
+    net.divideParam.testRatio = testRatio;
     
     % Train the Network
     [net, tr] = train(net, x, t);

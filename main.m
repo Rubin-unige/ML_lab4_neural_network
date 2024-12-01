@@ -1,22 +1,20 @@
-%% Main assignment script
+%% Main Assignment Scripts
 
-addpath("Data");
-addpath("src");
-    
-%% Task 1: Feedforward multi-layer networks (multi-layer perceptrons)
+addpath("src\");
 
-%% Iris dataset
-% Read the dataset
-iris_dataset = readtable("Data\iris_dataset\iris.data", 'FileType', 'text');
-% Rename the columns          
-iris_dataset.Properties.VariableNames = {'SepalLength', 'SepalWidth', 'PetalLength', 'PetalWidth', 'Species'};
-% Convert the Species column to a categorical variable
-iris_dataset.Species = categorical(iris_dataset.Species);
-disp(head(iris_dataset)); % display for test
-% Prepare data
-x_iris = iris_dataset{:, 1:4};
-t_iris = iris_dataset.Species;
-% Call pattern recognition function
-task1_feedforward_mlp(x_iris, t_iris);
+%% Task 2: Autoencoder
 
+% choose which two digit you want to train
+digit_1 = 1;
+digit_2 = 8;
 
+% fucntion to load MNIST data
+[x , t] = task2_loadMNIST(digit_1, digit_2);
+x = x';
+
+% Setup before training, experiment here to train the best NN
+hidden_units = 10; 
+max_epochs = 1000;
+
+% Autoencoder function
+task2_autoencoder(x, t, hidden_units, max_epochs);
