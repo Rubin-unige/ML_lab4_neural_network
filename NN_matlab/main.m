@@ -5,10 +5,9 @@ addpath("data\");
 
 %% Task 1: Feedforward multi-layer networks (multi-layer perceptrons)
 
-%% Iris Dataset
-% prepare data
+%% Prepare dataset for training (iris dataset, wine dataset and breast cancer dataset
+% Iris Dataset
 input_file = "data\iris_dataset\iris.data";
-
 % Read the .data file
 data = readtable(input_file, FileType="text");
 
@@ -33,7 +32,7 @@ end
 
 save('data\iris_dataset\iris_prepared.mat', 'X', 'T');
 
-%% Breast Cancer dataset
+% Breast Cancer dataset
 
 % File path
 input_file = "data\breast_cancer_dataset\wdbc.data";
@@ -64,7 +63,7 @@ end
 save('data\breast_cancer_dataset\breast_cancer_prepared.mat', 'X', 'T');
 
 
-%% Wine dataset
+% Wine dataset
 % File path
 input_file = "data\wine_dataset\wine.data";  % Adjust path based on your dataset location
 
@@ -95,21 +94,36 @@ for i = 1:num_samples
 end
 save('data\wine_dataset\wine_prepared.mat', 'X', 'T');  % Save the feature and target matrices
 
+%% Load Data
+% uncomment the data you want to train
 
-% %% Task 2: Autoencoder
-% 
-% % choose which two digit you want to train
-% digit_1 = 1;
-% digit_2 = 8;
-% 
-% % fucntion to load MNIST data
-% [x , t] = task2_loadMNIST(digit_1, digit_2);
-% x = x';
-% disp(size(x));
-% 
-% % Setup before training, experiment here to train the best NN
-% hidden_units = 10; 
-% max_epochs = 10;
-% 
-% % Autoencoder function
-% task2_autoencoder(x, t, hidden_units, max_epochs);
+%load("data\iris_dataset\iris_prepared.mat");
+load("data\breast_cancer_dataset\breast_cancer_prepared.mat");
+%load("data\wine_dataset\wine_prepared.mat");
+
+%% Neural Network training setting
+
+hiddenLayerSize = 10; % experiment with this
+trainRatio = 70/ 100;
+valRatio = 15/100;
+testRatio = 15/100;
+
+task1_feedforward_mlp(X, T, hiddenLayerSize, trainRatio, valRatio, testRatio)
+
+%% Task 2: Autoencoder
+
+% choose which two digit you want to train
+digit_1 = 1;
+digit_2 = 8;
+
+% fucntion to load MNIST data
+[x , t] = task2_loadMNIST(digit_1, digit_2);
+x = x';
+disp(size(x));
+
+% Setup before training, experiment here to train the best NN
+hidden_units = 10; 
+max_epochs = 1000;
+
+% Autoencoder function
+task2_autoencoder(x, t, hidden_units, max_epochs);

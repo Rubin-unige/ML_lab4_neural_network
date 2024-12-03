@@ -2,9 +2,6 @@
 
 function task1_feedforward_mlp(x, t, hiddenLayerSize, trainRatio, valRatio, testRatio)
 
-    % Transpose data
-    x = x';
-    t = t'; 
     % Choose a Training Function
     trainFcn = 'trainscg';  % Scaled Conjugate Gradient Backpropagation
     
